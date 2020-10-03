@@ -1,11 +1,13 @@
 package com.briglelabz.tictactoe;
 
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class TicTacToe {
 	char[] boardArray = new char[10];
 	String userInput = null;
 	String computerInput = null;
+	Scanner sc = new Scanner(System.in);
 
 	// Method to Create TicTacToe Board
 	private void createBoard() {
@@ -16,7 +18,7 @@ public class TicTacToe {
 
 	// Method for Player Character(X/O)
 	public String selectInputChar() {
-		Scanner sc = new Scanner(System.in);
+
 		System.out.println("Enter character X or O ");
 		userInput = sc.next();
 		if (userInput.equals("X") || userInput.equals("x")) {
@@ -26,8 +28,30 @@ public class TicTacToe {
 		} else {
 			System.out.println("Incorrect Input");
 		}
-		sc.close();
+
 		return computerInput;
+	}
+
+	// Method to Check Location and move to that Position
+	public void checkLocationAndMove() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("\nPlease enter location to move: ");
+		int location = sc.nextInt();
+		if (location > 0 && location < 10) {
+			if (boardArray[location] == ' ') {
+				System.out.println("Position is free");
+				makeMove(location);
+			}
+		} else
+			System.out.println("Please check the location");
+
+	}
+
+	// Function to Move to Specific Location
+	public void makeMove(int location) {
+		System.out.println("Moving to Location: " + location);
+		boardArray[location] = userInput.charAt(0);
+		showBoard();
 	}
 
 	// Show the Current TicTacToe Board Status
@@ -51,6 +75,6 @@ public class TicTacToe {
 		String computerLetter = Player.selectInputChar();
 		System.out.println("Computer choice is:" + computerLetter);
 		Player.showBoard();
+		Player.checkLocationAndMove();
 	}
 }
-
