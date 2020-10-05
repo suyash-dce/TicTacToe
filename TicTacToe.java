@@ -5,10 +5,11 @@ import java.util.*;
 public class TicTacToe {
 	public static final int HEADS = 1;
 	char[] boardArray = new char[10];
-	String userInput = null;
-	int chance =0;
-	String computerInput = null;
+	char userInput = '\0';
+	int chance = 0;
+	char computerInput = '\0';
 	Scanner sc = new Scanner(System.in);
+	int position = 0;
 
 	// Method to Create TicTacToe Board
 	private void createBoard() {
@@ -18,14 +19,14 @@ public class TicTacToe {
 	}
 
 	// Method for Player Character(X/O)
-	public String selectInputChar() {
+	public char selectInputChar() {
 
 		System.out.println("Enter character X or O ");
-		userInput = sc.next();
-		if (userInput.equals("X") || userInput.equals("x")) {
-			computerInput = "O";
-		} else if (userInput.equals("O") || userInput.equals("o")) {
-			computerInput = "X";
+		userInput = sc.next().charAt(0);
+		if (userInput == 'X' || userInput == 'x') {
+			computerInput = 'O';
+		} else if (userInput == 'O' || userInput == 'o') {
+			computerInput = 'X';
 		} else {
 			System.out.println("Incorrect Input");
 		}
@@ -49,21 +50,120 @@ public class TicTacToe {
 	// Function to Move to Specific Location
 	public void makeMoveUser(int location) {
 		System.out.println("Moving to Location: " + location);
-		boardArray[location] = userInput.charAt(0);
+		boardArray[location] = userInput;
 		showBoard();
 	}
-	
-	//Method for Computer's Turn
-	public void computerTurn() {
+
+	// Method for Computer's Turn
+	public int computerTurn() {
 		System.out.println("\nComputer's Turn");
-		do{
-			int play = (int) (1 + (Math.floor(Math.random() * 9)));
-			if (boardArray[play] == ' ') {
-				boardArray[play] = computerInput.charAt(0);
-				chance = 1;
-				showBoard();
+		int turn = (int) (1 + (Math.floor(Math.random() * 9)));
+		if (boardArray[turn] == ' ') {
+
+			if (((boardArray[3] == boardArray[2] && boardArray[3] == computerInput)
+					|| (boardArray[4] == boardArray[7] && boardArray[4] == computerInput)
+					|| (boardArray[5] == boardArray[9] && boardArray[5] == computerInput)) && boardArray[1] == ' ') {
+				position = 1;
+			} else if (((boardArray[1] == boardArray[3] && boardArray[1] == computerInput)
+					|| (boardArray[5] == boardArray[8] && boardArray[5] == computerInput)) && boardArray[2] == ' ') {
+				position = 2;
+			} else if (((boardArray[1] == boardArray[2] && boardArray[1] == computerInput)
+					|| (boardArray[5] == boardArray[7] && boardArray[5] == computerInput)
+					|| (boardArray[6] == boardArray[9] && boardArray[6] == computerInput)) && boardArray[3] == ' ') {
+				position = 3;
+			} else if (((boardArray[1] == boardArray[7] && boardArray[1] == computerInput)
+					|| (boardArray[5] == boardArray[6] && boardArray[5] == computerInput)) && boardArray[4] == ' ') {
+				position = 4;
+			} else if (((boardArray[1] == boardArray[9] && boardArray[1] == computerInput)
+					|| (boardArray[3] == boardArray[7] && boardArray[3] == computerInput)
+					|| (boardArray[6] == boardArray[4] && boardArray[6] == computerInput)) && boardArray[5] == ' ') {
+				position = 5;
+			} else if (((boardArray[4] == boardArray[5] && boardArray[4] == computerInput)
+					|| (boardArray[3] == boardArray[9] && boardArray[3] == computerInput)) && boardArray[6] == ' ') {
+				position = 6;
+			} else if (((boardArray[1] == boardArray[4] && boardArray[1] == computerInput)
+					|| (boardArray[5] == boardArray[3] && boardArray[5] == computerInput)
+					|| (boardArray[8] == boardArray[9] && boardArray[8] == computerInput)) && boardArray[7] == ' ') {
+				position = 7;
+			} else if (((boardArray[5] == boardArray[2] && boardArray[5] == computerInput)
+					|| (boardArray[7] == boardArray[9] && boardArray[7] == computerInput)) && boardArray[8] == ' ') {
+				position = 8;
+			} else if (((boardArray[5] == boardArray[1] && boardArray[1] == computerInput)
+					|| (boardArray[8] == boardArray[7] && boardArray[7] == computerInput)
+					|| (boardArray[6] == boardArray[3] && boardArray[6] == computerInput)) && boardArray[9] == ' ') {
+				position = 9;
+			} else if (((boardArray[3] == boardArray[2] && boardArray[3] == userInput)
+					|| (boardArray[4] == boardArray[7] && boardArray[4] == userInput)
+					|| (boardArray[5] == boardArray[9] && boardArray[5] == userInput)) && boardArray[1] == ' ') {
+				position = 1;
+			} else if (((boardArray[1] == boardArray[3] && boardArray[1] == userInput)
+					|| (boardArray[5] == boardArray[8] && boardArray[5] == userInput)) && boardArray[2] == ' ') {
+				position = 2;
+			} else if (((boardArray[1] == boardArray[2] && boardArray[1] == userInput)
+					|| (boardArray[5] == boardArray[7] && boardArray[5] == userInput)
+					|| (boardArray[6] == boardArray[9] && boardArray[6] == userInput)) && boardArray[3] == ' ') {
+				position = 3;
+			} else if (((boardArray[1] == boardArray[7] && boardArray[1] == userInput)
+					|| (boardArray[5] == boardArray[6] && boardArray[5] == userInput)) && boardArray[4] == ' ') {
+				position = 4;
+			} else if (((boardArray[1] == boardArray[9] && boardArray[1] == userInput)
+					|| (boardArray[3] == boardArray[7] && boardArray[3] == userInput)
+					|| (boardArray[6] == boardArray[4] && boardArray[6] == userInput)) && boardArray[5] == ' ') {
+				position = 5;
+			} else if (((boardArray[4] == boardArray[5] && boardArray[4] == userInput)
+					|| (boardArray[3] == boardArray[9] && boardArray[3] == userInput)) && boardArray[6] == ' ') {
+				position = 6;
+			} else if (((boardArray[1] == boardArray[4] && boardArray[1] == userInput)
+					|| (boardArray[5] == boardArray[3] && boardArray[5] == userInput)
+					|| (boardArray[8] == boardArray[9] && boardArray[8] == userInput)) && boardArray[7] == ' ') {
+				position = 7;
+			} else if (((boardArray[5] == boardArray[2] && boardArray[5] == userInput)
+					|| (boardArray[7] == boardArray[9] && boardArray[7] == userInput)) && boardArray[8] == ' ') {
+				position = 8;
+			} else if (((boardArray[5] == boardArray[1] && boardArray[1] == userInput)
+					|| (boardArray[8] == boardArray[7] && boardArray[7] == userInput)
+					|| (boardArray[6] == boardArray[3] && boardArray[6] == userInput)) && boardArray[9] == ' ') {
+				position = 9;
+			} else if (boardArray[1] == ' ' && boardArray[2] != ' ' && boardArray[3] != ' ' && boardArray[4] != ' '
+					&& boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 1;
+			} else if (boardArray[3] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[4] != ' '
+					&& boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 3;
+			} else if (boardArray[7] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[4] != ' ' && boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 7;
+			} else if (boardArray[9] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[4] != ' ' && boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' '
+					&& boardArray[8] != ' ') {
+				position = 9;
+			} else if (boardArray[5] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[4] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 5;
+			} else if (boardArray[2] == ' ' && boardArray[1] != ' ' && boardArray[3] != ' ' && boardArray[4] != ' '
+					&& boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 2;
+			} else if (boardArray[4] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 4;
+			} else if (boardArray[6] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[4] != ' ' && boardArray[5] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				position = 6;
+			} else if (boardArray[8] == ' ' && boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' '
+					&& boardArray[4] != ' ' && boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' '
+					&& boardArray[9] != ' ') {
+				position = 8;
 			}
-		}while(chance!=1);
+			showBoard();
+		}
+		return position;
 	}
 
 	// Show the Current TicTacToe Board Status
@@ -77,6 +177,41 @@ public class TicTacToe {
 			System.out.print("_" + boardArray[i] + "|");
 			rowCount++;
 		}
+	}
+
+	// Check Winning and Tie
+	private void winTie(int toss) {
+		if ((boardArray[1] != ' ' && boardArray[1] == boardArray[2] && boardArray[2] == boardArray[3])
+				|| (boardArray[4] != ' ' && boardArray[4] == boardArray[5] && boardArray[5] == boardArray[6])
+				|| (boardArray[7] != ' ' && boardArray[7] == boardArray[8] && boardArray[8] == boardArray[9])
+				|| (boardArray[1] != ' ' && boardArray[1] == boardArray[4] && boardArray[4] == boardArray[7])
+				|| (boardArray[2] != ' ' && boardArray[2] == boardArray[5] && boardArray[5] == boardArray[8])
+				|| (boardArray[3] != ' ' && boardArray[3] == boardArray[6] && boardArray[6] == boardArray[9])
+				|| (boardArray[1] != ' ' && boardArray[1] == boardArray[5] && boardArray[5] == boardArray[9])
+				|| (boardArray[3] != ' ' && boardArray[3] == boardArray[5] && boardArray[5] == boardArray[7])) {
+			if (toss == HEADS) {
+				System.out.println("The winner is player.");
+			} else {
+				System.out.println("The winner is computer.");
+			}
+			System.exit(0);
+		} else {
+			if (boardArray[1] != ' ' && boardArray[2] != ' ' && boardArray[3] != ' ' && boardArray[4] != ' '
+					&& boardArray[5] != ' ' && boardArray[6] != ' ' && boardArray[7] != ' ' && boardArray[8] != ' '
+					&& boardArray[9] != ' ') {
+				System.out.println("The game is tie.");
+				System.exit(0);
+			} else {
+				if (toss == HEADS) {
+					toss--;
+					checkLocationAndMove();
+				} else {
+					toss++;
+					checkLocationAndMove();
+				}
+			}
+		}
+		showBoard();
 	}
 
 	// Main Program
